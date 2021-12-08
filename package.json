@@ -1,0 +1,39 @@
+{
+  "name": "game-the-life",
+  "version": "1.0.0",
+  "description": "This is a game based o b2/s23",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knyazev13ivan/game-the-life.git"
+  },
+  "keywords": [
+    "game",
+    "life"
+  ],
+  "author": "Ivan Knyazev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/knyazev13ivan/game-the-life/issues"
+  },
+  "homepage": "https://github.com/knyazev13ivan/game-the-life#readme",
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-react": "^7.16.0",
+    "@babel/preset-typescript": "^7.16.0",
+    "babel-loader": "^8.2.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^6.5.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1"
+  }
+}
