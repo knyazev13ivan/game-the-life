@@ -2,4 +2,65 @@
 
 body {
     font-family: 'Roboto-Light', sans-serif;
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+    background-color: #222222;
+}
+
+.game {
+    margin: 20px;
+}
+
+.game .control {
+    padding-bottom: 10px;
+}
+
+.game .control button {
+    margin-right: 10px;
+    padding: 3px 20px;
+
+    font-weight: bold;
+    font-size: 20px;
+
+    color: #ff934a;
+    background-color: transparent;
+    cursor: pointer;
+
+    border-image: linear-gradient(25deg, #ff934a 0%, transparent 60%);
+    border-image-slice: 1;
+
+    transition: border-image 0.15s;
+}
+
+.game .control button:hover {
+    color: #ffc9a4;
+    background-color: #333333;
+
+    border-image: linear-gradient(25deg, #ff934a 20%, transparent 100%);
+    border-image-slice: 1;
+}
+
+.game .control button.control__random {
+    margin-right: 100px;
+}
+
+.game-field {
+    position: relative;
+
+    width: 500px;
+    height: 500px;
+
+    background-color: #151515;
+}
+
+.elem {
+    position: absolute;
+
+    width: 10px;
+    height: 10px;
+
+    background-color: #ff934a;
 }
