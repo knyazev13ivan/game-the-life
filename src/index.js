@@ -4,29 +4,29 @@ let field = document.querySelector('.game-field')
 let width = +/\d+/.exec(window.getComputedStyle(field).width)[0]
 let height = +/\d+/.exec(window.getComputedStyle(field).height)[0]
 
-let sell = document.querySelector('.sell')
-let sellSize = +/\d+/.exec(window.getComputedStyle(sell).width)[0]
+let cell = document.querySelector('.cell')
+let cellSize = +/\d+/.exec(window.getComputedStyle(cell).width)[0]
 
 let btnRandom = document.querySelector('.control__random')
 let btnStart = document.querySelector('.control__start')
 let btnPlusOne = document.querySelector('.control__plus-one')
 let btnSpeed = document.querySelector('.control__speed')
 
-let matrix = new Array(width / sellSize)
+let matrix = new Array(width / cellSize)
   .fill(0)
-  .map((str, indexStr) => new Array(height / sellSize)
+  .map((str, iStr) => new Array(height / cellSize)
     .fill(0)
-    .map((e, indexE) => {
+    .map((e, iE) => {
       let newSell = document.createElement('div')
-      newSell.classList.add('sell')
-      newSell.style.top = `${(indexE) * sellSize}px`
-      newSell.style.left = `${(indexStr) * sellSize}px`
+      newSell.classList.add('cell')
+      newSell.style.top = `${(iE) * cellSize}px`
+      newSell.style.left = `${(iStr) * cellSize}px`
       newSell.style.display = 'none'
 
       field.appendChild(newSell)
 
       return {
-        sell: newSell,
+        cell: newSell,
         state: false
       };
     }))
@@ -34,49 +34,63 @@ let matrix = new Array(width / sellSize)
 let renderRandomFilling = (matrix) => {
   matrix.forEach(str => str.forEach(e => {
     if (Math.random() < 0.3) {
-      e.sell.style.display = 'block'
+      e.cell.style.display = 'block'
       e.state = true
     } else {
-      e.sell.style.display = 'none'
+      e.cell.style.display = 'none'
       e.state = false
     }
   }))
 }
-
-let stateMatrix = new Array(width / sellSize)
-.fill(new Array(height / sellSize)
-.fill(false))
 
 let ruleB3S23 = {
   b: [3],
   s: [2, 3]
 }
 
+
 let step = (rule) => {
 
-  matrix.forEach((str, indexStr) => str.forEach((e, indexE) => {
+  matrix.forEach((str, iStr, m) => str.forEach((e, iE) => {
     let count = 0
-    
-    
-    
-    if (e.state == true && (count == 2 || count == 3)) {
+
+    if (m[iStr - 1] && m[iStr - 1][iE - 1] && m[iStr - 1][iE - 1].cell.style.display == 'block') count++
+    if (m[iStr - 1] && m[iStr - 1][iE] && m[iStr - 1][iE].cell.style.display == 'block') count++
+    if (m[iStr - 1] && m[iStr - 1][iE + 1] && m[iStr - 1][iE + 1].cell.style.display == 'block') count++
+    if (m[iStr][iE - 1] && m[iStr][iE - 1].cell.style.display == 'block') count++
+    if (m[iStr][iE + 1] && m[iStr][iE + 1].cell.style.display == 'block') count++
+    if (m[iStr + 1] && m[iStr + 1][iE - 1] && m[iStr + 1][iE - 1].cell.style.display == 'block') count++
+    if (m[iStr + 1] && m[iStr + 1][iE] && m[iStr + 1][iE].cell.style.display == 'block') count++
+    if (m[iStr + 1] && m[iStr + 1][iE + 1] && m[iStr + 1][iE + 1].cell.style.display == 'block') count++
+
+    if (e.cell.style.display == 'none' && count == 3) {
       e.state = true
     } else {
       e.state = false
     }
-    if (e.state == false && count == rule.b[0]) {
+    if (e.cell.style.display == 'block' && (count == 2 || count == 3)) {
       e.state = true
-    } else {
-      e.state = false
     }
   }))
 
-  matrix.forEach((str, indexStr) => str.forEach((e, indexE) => {
-    e.sell.style.display = e.state ? 'block' : 'none'
+  matrix.forEach((str, iStr) => str.forEach((e, iE) => {
+    e.cell.style.display = e.state ? 'block' : 'none'
   }))
 }
 
-btnRandom.addEventListener('click', () => {renderRandomFilling(matrix)
-  console.log(matrix[0])
-})
+async function start() {
+  let speed = +document.querySelector('.control__speed').value || 100
+  console.log(speed);
+
+  let running = 0
+
+  let living = setInterval(() => {
+    step(ruleB3S23)
+  }, speed)
+
+  await living
+}
+
+btnStart.addEventListener('click', () => start())
+btnRandom.addEventListener('click', () => renderRandomFilling(matrix))
 btnPlusOne.addEventListener('click', () => step(ruleB3S23))

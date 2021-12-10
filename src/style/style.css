@@ -18,7 +18,8 @@ body {
     padding-bottom: 10px;
 }
 
-.game .control button {
+.game .control button,
+.game .control .control__speed {
     margin-right: 10px;
     padding: 3px 20px;
 
@@ -33,6 +34,11 @@ body {
     border-image-slice: 1;
 
     transition: border-image 0.15s;
+}
+
+.game .control .control__speed {
+    width: 65px;
+    padding-left: 3px;
 }
 
 .game .control button:hover {
@@ -56,8 +62,9 @@ body {
     background-color: #151515;
 }
 
-.sell {
+.cell {
     position: absolute;
+    display: none;
 
     width: 10px;
     height: 10px;
