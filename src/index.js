@@ -8,6 +8,7 @@ let cell = document.querySelector('.cell')
 let cellSize = +/\d+/.exec(window.getComputedStyle(cell).width)[0]
 
 let btnRandom = document.querySelector('.control__random')
+let btnClear = document.querySelector('.control__clear')
 let btnStart = document.querySelector('.control__start')
 let btnPlusOne = document.querySelector('.control__plus-one')
 let btnSpeed = document.querySelector('.control__speed')
@@ -15,8 +16,8 @@ let btnSpeed = document.querySelector('.control__speed')
 let color = 'rgb(255, 128, 0)'
 
 let matrix = new Array(width / cellSize)
-.fill(0)
-.map((str, iStr) => new Array(height / cellSize)
+  .fill(0)
+  .map((str, iStr) => new Array(height / cellSize)
     .fill(0)
     .map((e, iE) => {
       let newSell = document.createElement('div')
@@ -24,7 +25,7 @@ let matrix = new Array(width / cellSize)
       newSell.style.top = `${(iE) * cellSize}px`
       newSell.style.left = `${(iStr) * cellSize}px`
       newSell.style.background = 'transparent'
-      
+
       field.appendChild(newSell)
 
       return {
@@ -33,29 +34,26 @@ let matrix = new Array(width / cellSize)
       };
     }))
 
-    let renderRandomFilling = (matrix) => {
-      matrix.forEach(str => str.forEach(e => {
+let renderRandomFilling = (matrix) => {
+  matrix.forEach(str => str.forEach(e => {
 
-        e.cell.addEventListener('click', () => {
-          console.log(e.cell.style.background)
+    e.cell.addEventListener('click', () => {
+      console.log(e.cell.style.background)
 
-          if (e.cell.style.background == color) {
-            e.cell.style.background = 'transparent'
-          } else {
-            e.cell.style.background = color
-          }
-          // if (e.cell.style.background == 'transparent') e.cell.style.background = color
-          
-          console.log(e.cell.style.background)
-        })
+      if (e.cell.style.background == color) {
+        e.cell.style.background = 'transparent'
+      } else {
+        e.cell.style.background = color
+      }
+    })
 
-        if (Math.random() < 0.15) {
-          e.cell.style.background = color
-          e.state = true
-        } else {
-          e.cell.style.background = 'transparent'
-          e.state = false
-        }
+    if (Math.random() < 0.15) {
+      e.cell.style.background = color
+      e.state = true
+    } else {
+      e.cell.style.background = 'transparent'
+      e.state = false
+    }
   }))
 }
 
@@ -99,27 +97,32 @@ let stopRunning
 
 async function start() {
   let speed = +document.querySelector('.control__speed').value || 100
-  
+
   if (running) {
     clearInterval(stopRunning)
     running = false
-    
+
     btnStart.innerHTML = 'start'
-    
+
     return
   }
-  
+
   running = true
-  
+
   stopRunning = setInterval(() => {
     step(ruleB3S23)
   }, speed)
-  
+
   btnStart.innerHTML = 'stop'
 }
 
 renderRandomFilling(matrix)
 
-btnStart.addEventListener('click', start)
+let clear = () => {
+  matrix.forEach(str => str.forEach(e => e.cell.style.background = 'transparent'))
+}
+
 btnRandom.addEventListener('click', () => renderRandomFilling(matrix))
+btnClear.addEventListener('click', clear)
+btnStart.addEventListener('click', start)
 btnPlusOne.addEventListener('click', () => step(ruleB3S23))

@@ -49,10 +49,6 @@ body {
     border-image-slice: 1;
 }
 
-.game .control button.control__random {
-    margin-right: 100px;
-}
-
 .game-field {
     position: relative;
 
