@@ -12,17 +12,19 @@ let btnStart = document.querySelector('.control__start')
 let btnPlusOne = document.querySelector('.control__plus-one')
 let btnSpeed = document.querySelector('.control__speed')
 
+let color = 'rgb(255, 128, 0)'
+
 let matrix = new Array(width / cellSize)
-  .fill(0)
-  .map((str, iStr) => new Array(height / cellSize)
+.fill(0)
+.map((str, iStr) => new Array(height / cellSize)
     .fill(0)
     .map((e, iE) => {
       let newSell = document.createElement('div')
       newSell.classList.add('cell')
       newSell.style.top = `${(iE) * cellSize}px`
       newSell.style.left = `${(iStr) * cellSize}px`
-      newSell.style.display = 'none'
-
+      newSell.style.background = 'transparent'
+      
       field.appendChild(newSell)
 
       return {
@@ -31,15 +33,29 @@ let matrix = new Array(width / cellSize)
       };
     }))
 
-let renderRandomFilling = (matrix) => {
-  matrix.forEach(str => str.forEach(e => {
-    if (Math.random() < 0.3) {
-      e.cell.style.display = 'block'
-      e.state = true
-    } else {
-      e.cell.style.display = 'none'
-      e.state = false
-    }
+    let renderRandomFilling = (matrix) => {
+      matrix.forEach(str => str.forEach(e => {
+
+        e.cell.addEventListener('click', () => {
+          console.log(e.cell.style.background)
+
+          if (e.cell.style.background == color) {
+            e.cell.style.background = 'transparent'
+          } else {
+            e.cell.style.background = color
+          }
+          // if (e.cell.style.background == 'transparent') e.cell.style.background = color
+          
+          console.log(e.cell.style.background)
+        })
+
+        if (Math.random() < 0.15) {
+          e.cell.style.background = color
+          e.state = true
+        } else {
+          e.cell.style.background = 'transparent'
+          e.state = false
+        }
   }))
 }
 
@@ -48,49 +64,62 @@ let ruleB3S23 = {
   s: [2, 3]
 }
 
-
 let step = (rule) => {
 
   matrix.forEach((str, iStr, m) => str.forEach((e, iE) => {
+
     let count = 0
 
-    if (m[iStr - 1] && m[iStr - 1][iE - 1] && m[iStr - 1][iE - 1].cell.style.display == 'block') count++
-    if (m[iStr - 1] && m[iStr - 1][iE] && m[iStr - 1][iE].cell.style.display == 'block') count++
-    if (m[iStr - 1] && m[iStr - 1][iE + 1] && m[iStr - 1][iE + 1].cell.style.display == 'block') count++
-    if (m[iStr][iE - 1] && m[iStr][iE - 1].cell.style.display == 'block') count++
-    if (m[iStr][iE + 1] && m[iStr][iE + 1].cell.style.display == 'block') count++
-    if (m[iStr + 1] && m[iStr + 1][iE - 1] && m[iStr + 1][iE - 1].cell.style.display == 'block') count++
-    if (m[iStr + 1] && m[iStr + 1][iE] && m[iStr + 1][iE].cell.style.display == 'block') count++
-    if (m[iStr + 1] && m[iStr + 1][iE + 1] && m[iStr + 1][iE + 1].cell.style.display == 'block') count++
+    if (m[iStr - 1] && m[iStr - 1][iE - 1] && m[iStr - 1][iE - 1].cell.style.background == color) count++
+    if (m[iStr - 1] && m[iStr - 1][iE] && m[iStr - 1][iE].cell.style.background == color) count++
+    if (m[iStr - 1] && m[iStr - 1][iE + 1] && m[iStr - 1][iE + 1].cell.style.background == color) count++
+    if (m[iStr][iE - 1] && m[iStr][iE - 1].cell.style.background == color) count++
+    if (m[iStr][iE + 1] && m[iStr][iE + 1].cell.style.background == color) count++
+    if (m[iStr + 1] && m[iStr + 1][iE - 1] && m[iStr + 1][iE - 1].cell.style.background == color) count++
+    if (m[iStr + 1] && m[iStr + 1][iE] && m[iStr + 1][iE].cell.style.background == color) count++
+    if (m[iStr + 1] && m[iStr + 1][iE + 1] && m[iStr + 1][iE + 1].cell.style.background == color) count++
 
-    if (e.cell.style.display == 'none' && count == 3) {
+    if (e.cell.style.background == 'transparent' && count == 3) {
       e.state = true
     } else {
       e.state = false
     }
-    if (e.cell.style.display == 'block' && (count == 2 || count == 3)) {
+    if (e.cell.style.background == color && (count == 2 || count == 3)) {
       e.state = true
     }
   }))
 
-  matrix.forEach((str, iStr) => str.forEach((e, iE) => {
-    e.cell.style.display = e.state ? 'block' : 'none'
+  matrix.forEach((str) => str.forEach((e) => {
+    e.cell.style.background = e.state ? color : 'transparent'
   }))
 }
 
+let running = false
+let stopRunning
+
 async function start() {
   let speed = +document.querySelector('.control__speed').value || 100
-  console.log(speed);
-
-  let running = 0
-
-  let living = setInterval(() => {
+  
+  if (running) {
+    clearInterval(stopRunning)
+    running = false
+    
+    btnStart.innerHTML = 'start'
+    
+    return
+  }
+  
+  running = true
+  
+  stopRunning = setInterval(() => {
     step(ruleB3S23)
   }, speed)
-
-  await living
+  
+  btnStart.innerHTML = 'stop'
 }
 
-btnStart.addEventListener('click', () => start())
+renderRandomFilling(matrix)
+
+btnStart.addEventListener('click', start)
 btnRandom.addEventListener('click', () => renderRandomFilling(matrix))
 btnPlusOne.addEventListener('click', () => step(ruleB3S23))

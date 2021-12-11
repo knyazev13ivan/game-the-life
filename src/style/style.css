@@ -26,11 +26,11 @@ body {
     font-weight: bold;
     font-size: 20px;
 
-    color: #ff934a;
+    color: #ff8000;
     background-color: transparent;
     cursor: pointer;
 
-    border-image: linear-gradient(25deg, #ff934a 0%, transparent 60%);
+    border-image: linear-gradient(25deg, #ff8000 0%, transparent 60%);
     border-image-slice: 1;
 
     transition: border-image 0.15s;
@@ -45,7 +45,7 @@ body {
     color: #ffc9a4;
     background-color: #333333;
 
-    border-image: linear-gradient(25deg, #ff934a 20%, transparent 100%);
+    border-image: linear-gradient(25deg, #ff8000 20%, transparent 100%);
     border-image-slice: 1;
 }
 
@@ -64,10 +64,11 @@ body {
 
 .cell {
     position: absolute;
-    display: none;
+    display: block;
 
-    width: 10px;
-    height: 10px;
+    width: 5px;
+    height: 5px;
 
-    background-color: #ff934a;
+    /* background-color: #ff8000; */
+    cursor: pointer;
 }
