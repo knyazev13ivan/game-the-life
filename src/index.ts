@@ -1,11 +1,11 @@
-// import './style/style.css'
+import './style/style.scss'
 
-let field = document.querySelector('.game-field')
-let width = +/\d+/.exec(window.getComputedStyle(field).width)[0]
-let height = +/\d+/.exec(window.getComputedStyle(field).height)[0]
+let field: Element = document.querySelector('.game-field')!
+let width: number = +/\d+/.exec(window.getComputedStyle(field).width)![0]
+let height: number = +/\d+/.exec(window.getComputedStyle(field).height)![0]
 
-let cell = document.querySelector('.cell')
-let cellSize = +/\d+/.exec(window.getComputedStyle(cell).width)[0]
+let cell: Element = document.querySelector('.cell')!
+let cellSize = +/\d+/.exec(window.getComputedStyle(cell).width)![0]
 
 let btnRandom = document.querySelector('.control__random')
 let btnClear = document.querySelector('.control__clear')
@@ -34,8 +34,8 @@ let matrix = new Array(width / cellSize)
       };
     }))
 
-let renderRandomFilling = (matrix) => {
-  matrix.forEach(str => str.forEach(e => {
+let renderRandomFilling = (matrix: any) => {
+  matrix.forEach((str: any) => str.forEach((e: any) => {
 
     e.cell.addEventListener('click', () => {
       console.log(e.cell.style.background)
@@ -62,7 +62,7 @@ let ruleB3S23 = {
   s: [2, 3]
 }
 
-let step = (rule) => {
+let step = (rule: any) => {
 
   matrix.forEach((str, iStr, m) => str.forEach((e, iE) => {
 
@@ -93,16 +93,17 @@ let step = (rule) => {
 }
 
 let running = false
-let stopRunning
+let stopRunning: any
 
 async function start() {
-  let speed = +document.querySelector('.control__speed').value || 100
+  let speedInput: HTMLInputElement = document.querySelector('.control__speed')!
+  let speed: number = +speedInput.value || 100
 
   if (running) {
     clearInterval(stopRunning)
     running = false
 
-    btnStart.innerHTML = 'start'
+    btnStart!.innerHTML = 'start'
 
     return
   }
@@ -113,7 +114,7 @@ async function start() {
     step(ruleB3S23)
   }, speed)
 
-  btnStart.innerHTML = 'stop'
+  btnStart!.innerHTML = 'stop'
 }
 
 renderRandomFilling(matrix)
@@ -122,7 +123,7 @@ let clear = () => {
   matrix.forEach(str => str.forEach(e => e.cell.style.background = 'transparent'))
 }
 
-btnRandom.addEventListener('click', () => renderRandomFilling(matrix))
-btnClear.addEventListener('click', clear)
-btnStart.addEventListener('click', start)
-btnPlusOne.addEventListener('click', () => step(ruleB3S23))
+btnRandom?.addEventListener('click', () => renderRandomFilling(matrix))
+btnClear?.addEventListener('click', clear)
+btnStart?.addEventListener('click', start)
+btnPlusOne?.addEventListener('click', () => step(ruleB3S23))
