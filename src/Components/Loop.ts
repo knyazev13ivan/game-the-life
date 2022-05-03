@@ -6,11 +6,11 @@ export class Loop {
   maxInterval: number
   minInterval: number
   req = 0
-  //game/animation loop
+
   constructor(update: (correction: number) => void, display: () => void) {
     this.update = update
     this.display = display
-    
+
     this.deltaTime = 0
     this.lastUpdate = 0
     this.maxInterval = 40
@@ -29,7 +29,7 @@ export class Loop {
       this.display()
     }
     this.lastUpdate = currentTime
-    
+
   }
   stop(): void {
     window.cancelAnimationFrame(this.req)

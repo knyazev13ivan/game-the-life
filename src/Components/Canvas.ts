@@ -3,20 +3,20 @@ import { DrawForLife } from './DrawForLife'
 import { Layer } from './Layer'
 import { Loop } from './Loop'
 import { RandomFill } from './RandomFill'
-// import { Glider } from './Models/Glider'
 // import { RandomColor } from './RandomColor'
 
 export class Canvas {
   layer: Layer
+  loop: Loop
+  container: HTMLElement
+
   matrix: Array<Array<0 | 1>>
   cellSize: number
   wSize: number
   hSize: number
-  loop: Loop
+
   isRun = true
   isEdit = false
-  container: HTMLElement
-  // handler: (event: MouseEvent) => void
 
   constructor(container: HTMLElement) {
     this.layer = new Layer(container)
@@ -47,27 +47,20 @@ export class Canvas {
 
     if (this.isEdit) {
       this.isEdit = !this.isEdit
-      console.log('stop');
-
       this.container.removeEventListener('click', this.handler, true)
-
-      this.loop.req = requestAnimationFrame(stampTime => this.loop.animate(stampTime))
     } else {
       this.isEdit = !this.isEdit
-      console.log('editing...');
-
       this.container.addEventListener('click', this.handler, true)
     }
   }
   handler(event: MouseEvent): void {
-    // if (event.target === document.querySelector('body')) {
-    console.log('click');
-    const x = Math.floor((event.clientX - this.layer.canvas.offsetLeft) / (this.cellSize + 1))
-    const y = Math.floor((event.clientY - this.layer.canvas.offsetTop) / (this.cellSize + 1))
+    if (event.target === this.container) {
+      const x = Math.floor((event.clientX - this.layer.canvas.offsetLeft) / (this.cellSize + 1))
+      const y = Math.floor((event.clientY - this.layer.canvas.offsetTop) / (this.cellSize + 1))
 
-    this.matrix[x][y] = this.matrix[x][y] ? 0 : 1;
+      this.matrix[x][y] = this.matrix[x][y] ? 0 : 1;
 
-    this.display()
-    // }
+      this.display()
+    }
   }
 }
