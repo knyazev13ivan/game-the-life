@@ -25,10 +25,12 @@ export class Canvas {
     this.cellSize = 2
     this.wSize = Math.floor(this.layer.w / (this.cellSize + 1))
     this.hSize = Math.floor(this.layer.h / (this.cellSize + 1))
-    this.matrix = new Array(this.wSize).fill(new Array(this.hSize).fill(0))
-
+    this.matrix = new Array(this.hSize).fill(new Array(this.wSize).fill(0))
+    
+    console.log('x: ', this.matrix[0].length, ', y: ', this.matrix.length);
+    
     this.matrix = RandomFill(this.matrix, this.wSize, this.hSize, 0.8)
-
+    
     this.loop = new Loop(this.update.bind(this), this.display.bind(this))
     this.handler = this.handler.bind(this)
   }
@@ -37,7 +39,7 @@ export class Canvas {
   }
   display(): void {
     this.layer.context.clearRect(0, 0, this.layer.w, this.layer.h);
-
+    
     DrawForLife(this.matrix, this.cellSize, this.layer, '#aa77cc')
   }
   edit(): void {
@@ -58,7 +60,7 @@ export class Canvas {
       const x = Math.floor((event.clientX - this.layer.canvas.offsetLeft) / (this.cellSize + 1))
       const y = Math.floor((event.clientY - this.layer.canvas.offsetTop) / (this.cellSize + 1))
 
-      this.matrix[x][y] = this.matrix[x][y] ? 0 : 1;
+      this.matrix[y][x] = this.matrix[y][x] ? 0 : 1;
 
       this.display()
     }

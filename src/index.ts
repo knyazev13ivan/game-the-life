@@ -1,3 +1,4 @@
+import { AddPresetToLayer } from './Components/AddPresetToLayer'
 import { Canvas } from './Components/Canvas'
 import { Clear } from './Components/Clear'
 import { RandomFill } from './Components/RandomFill'
@@ -25,11 +26,12 @@ $presetsElements?.addEventListener('click', (event) => {
     $start.textContent = "start"
 
     body.loop.stop()
-
+    
     const name: string | null = $preset.textContent
-
+    Clear(body)
+    
     saves.presets.forEach(e => {
-      if (e[0] === name) body.matrix = e[1]
+      if (e[0] === name) AddPresetToLayer(e[1], body.matrix)
       body.display()
     })
   }
