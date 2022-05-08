@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Life</title>
+  <script defer="defer" src="buildForGitHubPages/stockPresets.js"></script>
+  <script defer="defer" src="buildForGitHubPages/main.js"></script>
+  <link href="buildForGitHubPages/main.css" rel="stylesheet">
+</head>
+
+<body>
+  <header class="page-header">
+    <h1>Conway's Game of Life</h1>
+  </header>
+  <div class="game">
+    <div class="game-control"><button class="game-control__start">stop</button> <button
+        class="game-control__random">random</button> <button class="game-control__step">one step</button> <button
+        class="game-control__clear">clear</button> <button class="game-control__edit">edit</button> <button
+        class="game-presets__save">save your preset</button></div>
+    <div class="modal-to-save-preset-container">
+      <div class="modal-to-save-preset">
+        <h3>Please enter a preset name:</h3><input class="modal-to-save-preset__name" type="text">
+        <div class="modal-to-save-preset__warning">Enter a valid name!</div>
+        <div class="modal-to-save-preset-control"><button class="modal-to-save-preset-control__cancel">cancel</button>
+          <button class="modal-to-save-preset-control__ok">ok</button></div>
+      </div>
+    </div>
+    <div class="game-presets">
+      <h3 class="game-presets__caption">presets:</h3>
+      <ul class="game-presets-list"></ul>
+    </div>
+  </div>
+</body>
+
+</html>

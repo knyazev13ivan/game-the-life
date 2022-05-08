@@ -27,8 +27,6 @@ export class Canvas {
     this.hSize = Math.floor(this.layer.h / (this.cellSize + 1))
     this.matrix = new Array(this.hSize).fill(new Array(this.wSize).fill(0))
     
-    console.log('x: ', this.matrix[0].length, ', y: ', this.matrix.length);
-    
     this.matrix = RandomFill(this.matrix, this.wSize, this.hSize, 0.8)
     
     this.loop = new Loop(this.update.bind(this), this.display.bind(this))

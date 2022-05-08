@@ -26,6 +26,10 @@ $presetsElements?.addEventListener('click', (event) => {
     $start.textContent = "start"
 
     body.loop.stop()
+
+    body.isRun = false
+    $start.textContent = "start"
+    $start.style.color = '#409900'
     
     const name: string | null = $preset.textContent
     Clear(body)

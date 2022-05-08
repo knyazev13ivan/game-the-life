@@ -5,14 +5,11 @@ export function AddPresetToLayer(preset: Array<Array<0 | 1>>, matrix: Array<Arra
   if (x < 0) x = 0
   if (y < 0) y = 0
 
-  console.log(preset[0]);
+  const strLength = Math.min(matrix.length, preset.length)
+  const iLength = Math.min(matrix[0].length, preset[0].length)
   
-  console.log('preset x: ', preset[0].length, 'preset y: ', preset.length);
-  console.log('matrix x: ', matrix[0].length, 'matrix y: ', matrix.length);
-  
-  
-  for (let str = 0; str < preset.length; str++) {
-    for (let i = 0; i < preset[0].length; i++) {
+  for (let str = 0; str < strLength; str++) {
+    for (let i = 0; i < iLength; i++) {
       matrix[str + y][i + x] = preset[str][i]
     }
   }
